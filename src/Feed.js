@@ -11,10 +11,13 @@ import { db } from './firebase'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { useSelector } from 'react-redux'
+import { selectUser } from './features/counter/userSlice'
 
 function Feed() {
     const [input, setInput] = useState('')
     const [posts, setPosts] = useState([])
+    const user = useSelector(selectUser)
 
     useEffect(() => {
         db.collection("posts").orderBy('timeSpam', 'desc').onSnapshot(snapshot => (
@@ -31,10 +34,10 @@ function Feed() {
         e.preventDefault();
 
         db.collection('posts').add({
-            name: 'Xuan',
-            description: 'this is a test right now',
+            name: user.displayName,
+            description: user.email,
             message: input,
-            photoUrl: '',
+            photoUrl: user.photoUrl || "",
             // 时区的不同
             timeSpam: firebase.firestore.FieldValue.serverTimestamp()
         })
