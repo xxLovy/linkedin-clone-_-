@@ -13,6 +13,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { useSelector } from 'react-redux'
 import { selectUser } from './features/counter/userSlice'
+import FlipMove from 'react-flip-move'
 
 function Feed() {
     const [input, setInput] = useState('')
@@ -67,16 +68,18 @@ function Feed() {
             </div>
 
             {/* Posts */}
-            {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
-                <Post
-                    key={id}
-                    name={name}
-                    description={description}
-                    message={message}
-                    photoUrl={photoUrl}
-                />
-            ))}
-            <Post name='Xuan' description='this is a test' message='wow it worked' />
+            <FlipMove>
+                {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
+                    <Post
+                        key={id}
+                        name={name}
+                        description={description}
+                        message={message}
+                        photoUrl={photoUrl}
+                    />
+                ))}
+                <Post name='Xuan' description='this is a test' message='wow it worked' />
+            </FlipMove>
         </div>
     )
 }
